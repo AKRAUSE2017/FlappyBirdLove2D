@@ -1,6 +1,6 @@
 Bird = Class{}
 
-local GRAVITY = 20
+local GRAVITY = 15
 
 function Bird:init()
     self.image = love.graphics.newImage('assets/sprites/bird.png')
@@ -18,10 +18,12 @@ function Bird:render()
 end
 
 function Bird:update(dt)
-    self.dy = self.dy + GRAVITY * dt
-    
+    self.dy = self.dy + GRAVITY * dt -- incrementally increases dy to fall faster over time
+    -- gravity * dt evaluates to a small fractional number when fps is high
+
     if love.keyboard.wasPressed("space") then
-        self.dy = -5
+        self.dy = -3 -- set velocity to be negative (it will stay negative for the next few subsequent frames) 
+        -- until gravity eventually causes the velocity to be zero and then positive again
     end
-    self.y = self.y + self.dy
+    self.y = self.y + self.dy -- update position
 end
